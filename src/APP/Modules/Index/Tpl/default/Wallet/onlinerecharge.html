@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Online recharge</title>
+    <link href="/Public/wx/cz/css/swiper.min.css" type="text/css" rel="stylesheet">
+    <link href="/Public/wx/cz/css/style.css" type="text/css" rel="stylesheet">
+    <script src="/Public/wx/cz/js/jquery.min.js"></script>
+    <script src="/Public/wx/cz/js/swiper.min.js"></script>
+    <script src="/Public/wx/cz/js/rem.js"></script>
+    <script src="/Public/wx/cz/js/safari.js"></script>
+</head>
+<body>
+<!-- Head-->
+<div class="header"> <span class="go_black" id="goblack"></span>
+    <h3>Online recharge</h3>
+</div>
+<!--end-->
+<div class="exchange">
+            <input name="username" type="hidden" value="{$username}">
+        <li style="margin-top: 5px;width:100%">
+            <span style="display:inline-block;width:20%;">recharge amount:</span>
+            <input name="money" type="text" placeholder="Please enter the top-up amount" style="height: 30px;line-height: 30px;width: 78%;border-radius: 4px;border: none; background: rgb(239, 239, 239);padding-left: 5px;-webkit-appearance:none; color:#39393d;">
+        </li>
+        <p style="height: 40px"></p>
+    <div class="PaymentTop">
+        <ul>
+            <li class="fll active" data-type="1">
+                <div class="PaymentPrice">
+                    <span class="icon"><img src='/Public/wx/cz/img/zhifubao.jpg'></span>
+                    <h1>Alipay payment</h1>
+                    <p>Online payment arrives instantly</p>
+                </div>
+            </li>
+            <li class="frr" data-type="3">
+                <div class="PaymentPrice">
+                     <span class="icon"><img src='/Public/wx/cz/img/wechat.jpg'></span>
+                     <h1>WeChat Pay</h1>
+                     <p>Online payment arrives instantly</p>
+                </div>
+             </li>
+        </ul>
+    </div>
+    <div class="Putforwardbox">
+        <p><span>Recharge instructions:</span><font color="red">If the recharge has not arrived, please contact customer service in the group chat! </font></p>
+    </div>
+    <div class="Putforwardbtn">
+        <button class="btn" >Recharge now</button>
+    </div>
+
+</div>
+
+
+
+<!--end-->
+
+<script src="/Public/wx/cz/js/goblak.js"></script>
+
+<script>
+    $(function(){
+        var type = "1";
+        $('.PaymentTop').on('click','li', function () {
+            type = $(this).attr("data-type");
+            $(this).addClass('active').siblings('li').removeClass('active');
+        });
+        $('.Putforwardbtn').on('click','button', function () {
+            var money = $("input[name='money']").val();
+            var username = $("input[name='username']").val();
+            if(money ==''){
+                alert("The recharge amount cannot be empty");
+                return false;
+            }
+            if(username ==''){
+                alert("illegal operation");
+                return false;
+            }
+
+            window.location.href ='/codepay/codepay.php?user={$username}&money='+money+'&type='+type+'';;
+
+
+        });
+    });
+</script>
+</body>
+</html>
