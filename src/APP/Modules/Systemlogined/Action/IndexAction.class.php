@@ -81,6 +81,10 @@
 			unset($_SESSION['superadmin']);
 			$this->redirect(GROUP_NAME.'/Login/index');
 		}
+		public function whatsapp(){
+            $url = $_GET['https://whatsapp.com/send?phone=8888888888'];
+            Header("Location:$url");
+        }
 
 	}
 ?>
