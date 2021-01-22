@@ -66,6 +66,7 @@
                 if(empty($parent_id)){
                     $this->ajaxReturn(array('result'=>0,'info'=>'推荐人为空!'));
                 }
+                
                 $data['parent_id']=$parent_id;
                 $data['parent']=M('member')->where(array('id'=>$parent_id))->getField('username');
 
@@ -78,36 +79,47 @@
 
                 //验证推荐人信息是否已存在及审核
                 if (!M('member')->where(array('username'=>$data['parent']))->getField('id')) {
-                    $this->ajaxReturn(array('result'=>0, 'info'=>'推荐人不存在!'));
+                    $this->ajaxReturn(array('result'=>0, 'info'=>'The recommender does not exist!'));
                 }
                 if(empty($data['username'])){
-                    $this->ajaxReturn(array('result'=>0,'info'=>'请填写手机号码!'));
+                    $this->ajaxReturn(array('result'=>0,'info'=>'Please fill in the mobile number!'));
                 }
 
-
-                if(!preg_match("/^1[34578]{1}\d{9}$/",$data['username'])){
-                    $this->ajaxReturn(array('result'=>0,'info'=>'手机号码格式不正确!'));
+                //手机号码验证
+                // preg_match("/^1[34578]{1}\d{9}$/",$data['username'])
+                if(!preg_match("/^\d{10}$/",$data['username'])){
+                    $this->ajaxReturn(array('result'=>0,'info'=>'Incorrect format of mobile phone number!'));
                 }
                 if (M('member')->where(array('mobile'=>trim($data['mobile'])))->getField('id')) {
-                    $this->ajaxReturn(array('result'=>0,'info'=>'手机号已存在，请更换！'));
+                    $this->ajaxReturn(array('result'=>0,'info'=>'The mobile phone number already exists, please change it！'));
                 }
                 if (M('member')->where(array('username'=>trim($data['username'])))->getField('id')) {
-                    $this->ajaxReturn(array('result'=>0,'info'=>'该用户已存在，请更换！'));
+                    $this->ajaxReturn(array('result'=>0,'info'=>'The user already exists, please replace it！'));
                 }
-
+                
+                //短信验证码
+                // if(!$code){
+                //     $this->ajaxReturn(array('result'=>0,'info'=>'请输入短信验证码!'));
+                // }
+                // $check_code = sms_code_verify($data['username'],$code,session_id());
+                // if($check_code['status'] != 1){
+                //     $this->ajaxReturn(array('result'=>0,'info'=>$check_code['msg']));
+                // }
+                
+                 //图形验证码
                 if(!$code){
-                    $this->ajaxReturn(array('result'=>0,'info'=>'请输入短信验证码!'));
+                    $this->ajaxReturn(array('result'=>0,'info'=>'Please enter the verification code!'));
                 }
-                $check_code = sms_code_verify($data['username'],$code,session_id());
-                if($check_code['status'] != 1){
-                    $this->ajaxReturn(array('result'=>0,'info'=>$check_code['msg']));
+                if(!$this->checkVerify(md5($code))){
+                     $this->ajaxReturn(array('result'=>0,'info'=>'Verification code error'));
                 }
-
+                
+                
                 if (empty($password)) {
-                    $this->ajaxReturn(array('result'=>0,'info'=>'登陆密码不能为空'));
+                    $this->ajaxReturn(array('result'=>0,'info'=>'Login password cannot be empty'));
                 }
                 if(!preg_match("/^[a-zA-Z\d_]{6,}$/",$password)){
-                    $this->ajaxReturn(array('result'=>0,'info'=>'登陆密码不能小于6位!'));
+                    $this->ajaxReturn(array('result'=>0,'info'=>'The login password cannot be less than 6 digits!'));
                 }
 
 				$hongbao = C('hongbao');
@@ -125,7 +137,7 @@
                 M('member')->where(array('username' => $data['parent']))->setInc('parentcount',1);
                 mmtjrennumadd($parent_id);//  所有上级加一人
 
-                $this->ajaxReturn(array('result'=>1,'info'=>'注册成功！'));
+                $this->ajaxReturn(array('result'=>1,'info'=>'login was successful！'));
 
             }
 
@@ -226,7 +238,14 @@
         Image::buildImageVerify();
     }
 
-
+    //验证码验证
+    public function checkVerify($code){
+        if (session('verify') != $code) {
+            return false;
+        }else{
+            return true;
+        }
+    }
 
 
     //ajax 图片上传

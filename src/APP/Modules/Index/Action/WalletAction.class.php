@@ -54,7 +54,7 @@ Class WalletAction extends CommonAction
             $s_time = strtotime(date("Y-m-d " . $tx_time_arr[0]));
             $o_time = strtotime(date("Y-m-d " . $tx_time_arr[1]));
             if (time() < $s_time || time() > $o_time) {
-                alert('提现时间为' . $tx_time, U('Index/wallet/index'));
+                alert('Withdrawal time is' . $tx_time, U('Index/wallet/index'));
                 exit;
             }
         }
@@ -79,7 +79,7 @@ Class WalletAction extends CommonAction
 
             if ($txcount > 0) {
 
-                $this->ajaxReturn(array('info' => '您当前有未处理完成的提现订单！'));
+                $this->ajaxReturn(array('info' => 'You currently have unprocessed withdrawal orders'));
             }
             $s_time = strtotime(date("Y-m-d 00:00:01"));
             $o_time = strtotime(date("Y-m-d 23:59:59"));
@@ -87,25 +87,25 @@ Class WalletAction extends CommonAction
             $ztxcount = M('emoneydetail')->where("addtime > {$s_time} and addtime < {$o_time} and username = {$username}")->count();
             if ($ztxcount >= $cishu) {
 
-                $this->ajaxReturn(array('info' => '每天最多可提现次数为' . $cishu . '次！'));
+                $this->ajaxReturn(array('info' => 'The maximum number of withdrawals per day is' . $cishu . '！'));
             }
 
             if ($txmoney == 0) {
 
-                $this->ajaxReturn(array('info' => '请正确填写提现金额！'));
+                $this->ajaxReturn(array('info' => 'Please fill in the withdrawal amount correctly'));
             }
             if ($txmoney > $balance) {
-                $this->ajaxReturn(array('info' => '对不起，您的可提现金额不足！'));
+                $this->ajaxReturn(array('info' => 'Sorry, your available cash is insufficient'));
             }
 
             if ($type == '') {
 
-                $this->ajaxReturn(array('info' => '请选择提现方式！'));
+                $this->ajaxReturn(array('info' => 'Please select the withdrawal method'));
             }
             //是否开启提现功能
             if (C('WITHDRAW_STATUS') == 'off') {
 
-                $this->ajaxReturn(array('info' => '提现暂未开放！', 'result' => '1', 'url' => U('Index/Wallet/index')));
+                $this->ajaxReturn(array('info' => 'Withdrawal is not yet open', 'result' => '1', 'url' => U('Index/Wallet/index')));
             }
             $tx_time = C('tx_time');
             if (!empty($tx_time)) {
@@ -114,20 +114,20 @@ Class WalletAction extends CommonAction
                 $o_time = strtotime(date("Y-m-d " . $tx_time_arr[1]));
                 if (time() < $s_time || time() > $o_time) {
 
-                    $this->ajaxReturn(array('info' => '提现时间为\'.$tx_time', 'result' => '1'));
+                    $this->ajaxReturn(array('info' => 'Withdrawal time is\'.$tx_time', 'result' => '1'));
                     exit;
                 }
             }
             //一次性提现最少额度
             if ($txmoney < C('WITHDRAW_MIN')) {
 
-                $this->ajaxReturn(array('info' => '您输入的提现金额小于最少提现金额，请输入至少' . C('WITHDRAW_MIN') . '提现额！'));
+                $this->ajaxReturn(array('info' => 'You enter the minimum withdrawal amount' . C('WITHDRAW_MIN') . '！'));
             }
             //设置提现整数倍
             if (C('WITHDRAW_INT') > 0) {
                 if ($txmoney % C('WITHDRAW_INT') != 0) {
 
-                    $this->ajaxReturn(array('info' => '您输入的提现金额必须为' . C('WITHDRAW_INT') . '的整数倍！'));
+                    $this->ajaxReturn(array('info' => 'The withdrawal amount you enter must be an integer' . C('WITHDRAW_INT') . ''));
                 }
             }
             //提现手续费点位、手续费上限、手续费下限	设置提现的时候要扣除的手续费即x%
@@ -160,7 +160,7 @@ Class WalletAction extends CommonAction
             } elseif ($type == 2) {
                 if ($member['zhifu'] == "") {
 
-                    $this->ajaxReturn(array('info' => '您还未上传支付宝收款二维码，请先上传支付宝二维码！', 'result' => '1', 'url' => U('Index/index/personal')));
+                    $this->ajaxReturn(array('info' => 'You have not uploaded the payment QR code！', 'result' => '1', 'url' => U('Index/index/personal')));
                 } else {
                     $data['username'] = session('username');
                     $data['mode'] = $type;
@@ -170,13 +170,13 @@ Class WalletAction extends CommonAction
                     $data['type'] = $type;
                     $data['addtime'] = time();
                     $data['zhifu'] = $member['zhifu'];
-                    $data['remark'] = '申请提现' . $txmoney . '元,扣除' . $withdrawtaxnum . '作为手续费扣除';
+                    $data['remark'] = 'Apply for withdrawal' . $txmoney . '₹,deduction' . $withdrawtaxnum . 'Deducted as a handling fee';
                 }
 
             } elseif ($type == 3) {
                 if ($member['wei'] == "") {
 
-                    $this->ajaxReturn(array('info' => '您还没未上传微信收款二维码，请先上传微信二维码！', 'result' => '1', 'url' => U('Index/index/personal')));
+                    $this->ajaxReturn(array('info' => 'You have not uploaded the payment QR code！', 'result' => '1', 'url' => U('Index/index/personal')));
                 } else {
                     $data['username'] = session('username');
                     $data['mode'] = $type;
@@ -186,21 +186,21 @@ Class WalletAction extends CommonAction
                     $data['type'] = $type;
                     $data['addtime'] = time();
                     $data['wei'] = $member['wei'];
-                    $data['remark'] = '申请提现' . $txmoney . '₹,扣除' . $withdrawtaxnum . '作为手续费扣除';
+                    $data['remark'] = 'Apply for withdrawal' . $txmoney . '₹,deduction' . $withdrawtaxnum . 'Deducted as a handling fee';
                 }
             }
 
 
             if (M('emoneydetail')->data($data)->add()) {
                 M('member')->where(array('username' => session('username')))->setDec('money', $txmoney);
-                account_log($data['username'], $txmoney, ' 提现', 0);
+                account_log($data['username'], $txmoney, ' Withdrawal', 0);
                 M('member')->where(array('username' => session('username')))->setInc('dongjie', $txmoney);
-                account_log4($data['username'], $txmoney, ' 提现冻结', 1);
+                account_log4($data['username'], $txmoney, ' Withdrawal freeze', 1);
 
-                $this->ajaxReturn(array('info' => '提现成功！', 'result' => '1', 'url' => U('Index/Wallet/withdrawnlog')));
+                $this->ajaxReturn(array('info' => 'Withdraw successfully！', 'result' => '1', 'url' => U('Index/Wallet/withdrawnlog')));
             } else {
 
-                $this->ajaxReturn(array('info' => '提现失败！', 'result' => '1', 'url' => U('Index/Wallet/withdrawn')));
+                $this->ajaxReturn(array('info' => 'Withdrawal failed！', 'result' => '1', 'url' => U('Index/Wallet/withdrawn')));
             }
         }
     }

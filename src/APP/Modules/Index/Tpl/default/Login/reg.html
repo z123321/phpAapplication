@@ -40,7 +40,7 @@
                     <div class="input-container">
                         <div class="input-control">
                             <i class="icon iconfont icon-tuijianren"></i>
-                            <input class="inputfield" type="text" id="parent" name="parent" placeholder="referral phone number" value="">
+                            <input class="inputfield" type="number" id="parent" name="parent" placeholder="Mobile number of recommender" value="">
                         </div>
                     </div>
 
@@ -49,14 +49,21 @@
                             <div class="col-60">
                                 <div class="input-control">
                                     <i class="icon iconfont icon-yanzhengma"></i>
-                                    <input class="inputfield" type="text" name="code" id="code" placeholder="SMS verification code" value="">
+                                    <input class="inputfield" type="text" name="code" id="code" placeholder="verification code" value="">
                                 </div>
                             </div>
-                            <div class="col-40" style="background: #fdb523;height: 40px;line-height: 40px;border-radius: 10px;text-align: center;">
-                                <span id="count_down" onClick="send_sms_reg_code()">
-                                   <p style="background: #fdb523;height: 40px;line-height: 40px;border-radius: 10px;text-align: center;">Verification code</p>
-                                </span>
+                           
+                            
+                            <div class="col-40" style="height: 40px;line-height: 40px;border-radius: 10px;text-align: center;">
+                                 <img class="" src="/index.php/index/login/verify" alt="" onclick="this.src='/index.php/index/login/verify?'+Math.random(10000);" style="width:100%;height:40px;"/>
                             </div>
+                            
+                            
+                            <!--<div class="col-40" style="background: #fdb523;height: 40px;line-height: 40px;border-radius: 10px;text-align: center;">-->
+                            <!--    <span id="count_down" onClick="send_sms_reg_code()">-->
+                            <!--       <p style="background: #fdb523;height: 40px;line-height: 40px;border-radius: 10px;text-align: center;">Verification code</p>-->
+                            <!--    </span>-->
+                            <!--</div>-->
 
                         </div>
                     </div>
@@ -150,11 +157,6 @@ function checkMobile(tel) {
         return false;
     };
 }
-function getSharID(){
-
-}
-
 </script>
-
 
 </body></html>

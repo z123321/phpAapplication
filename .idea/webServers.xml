@@ -2,8 +2,15 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="9a53b27c-ff59-4375-8dda-627aad963c54" name="101.32.82.52" url="http://101.32.82.215">
+      <webServer id="0058eb11-04fd-4872-97ac-1765dd5f6020" name="101.32.82.215" url="http://101.32.82.215">
         <fileTransfer host="101.32.82.215" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="e1e466c7-d918-4625-9312-b7aa14433635" name="203.160.52.93" url="http://203.160.52.93">
+        <fileTransfer host="203.160.52.93" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
