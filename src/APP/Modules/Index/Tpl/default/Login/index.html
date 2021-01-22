@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Login</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="wap-font-scale" content="no">
+    <link rel="stylesheet" href="/Public/dianyun/css/app.css">
+    <link rel="stylesheet" href="/Public/dianyun/css/iconfont.css">
+	<style>
+	.wrapper{
+	min-height:auto;
+	}
+	body{
+		background-size: auto;
+	}
+	*{
+		margin: 0;
+		padding: 0;
+		text-decoration: none;
+		list-style: none;
+	}
+	</style>
+</head>
+
+  <body style="background: url(/Public/dianyun/img/about-bg.jpg)no-repeat #151a36; background-size: 100%;">
+  	
+  	<div class="login_logo">
+  		<img src="/favicon.ico"/>
+  	</div>
+  	
+  	
+  	<div class="login_form">
+   <form name="form" method="post" id="form">
+   <div class="input-container">
+   <div class="input-control">
+   <i class="icon iconfont icon-yonghuming"></i>
+   <input class="inputfield" type="text" id="txtUid" name="username" placeholder="Member ID or mobile number" maxlength="11" value="">
+   </div>
+   </div>
+   <div class="input-container">
+   <div class="input-control">
+   <i class="icon iconfont icon-mima"></i>
+   <input class="inputfield" type="password" id="password" name="password" placeholder="login password" value="">
+   </div>
+   </div>
+  
+   <div class="row loginfield">
+  
+   </div>
+   
+   <div class="center">
+   <div class="space-20"></div>
+   
+   <a href="javascript:tryLogin();" class="btn_submit_my login_la">
+   				log in immediately
+   </a>
+   </div>
+   </form>
+   <a href="{:U('Index/Login/reg')}" class="login_laa" style="margin-top: 1rem;">Register now? </a>
+   </div>
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+
+<script src="/Public/js/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript">
+	$(".btn_submit_my").click(function(){
+			$.ajax({
+				url:'{:U("Index/Login/index")}',
+				type:'POST',
+				data:$("#form").serialize(),
+				dataType:'json',
+				success:function(json){
+						alert(json.info);
+						if(json.result ==1){
+							window.location.href=json.url;
+						}
+				},
+				error:function(){
+						alert("Error");
+				}
+			})
+
+	})
+
+
+</script>
+
+<script type="text/javascript" src="https://js.users.51.la/19447899.js"></script>
+
+	</body>
+</html>

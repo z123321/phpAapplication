@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html class="pixel-ratio-3 retina android android-5 android-5-0 watch-active-state"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+
+	<title>Edit Member Profile</title>
+<link rel="stylesheet" href="/Public/dianyun/css/app.css">
+<link rel="stylesheet" href="/Public/dianyun/css/iconfont.css">
+<script src="/Public/js/jquery-1.8.3.min.js"></script>
+<script src="/Public/js/layer/layer.js"></script>
+<style type="text/css">
+     *{
+     margin: 0;
+     padding: 0;
+     }
+     </style>
+
+</head>
+<body style="background: #ffffff;">
+<div class="navbar theme-white">
+<div class="navbar-inner">
+<div class="left">
+<a href="javascript:history.go(-1);" class="external link"> <i class="icon iconfont icon-angleleft" style="transform: translate3d(0px, 0px, 0px);line- height: 3rem;"></i>Back</a>
+</div>
+<div class="center" data-i18n="member.myinfo" style="left: -24px;color: #fff;margin-top: -35px;">member information editing</div>
+<div class="right"></div>
+</div>
+</div>
+<div class="pe-index-t">
+   <p class="pe-index-t-t">My profile picture<img src="/favicon.ico"/> </p>
+  		
+  		<p class="pe-index-t-c">Real name<span>{$minfo.truename}</span> </p>
+   <p class="pe-index-t-c">My level<span><if condition="$minfo['level'] eq 0">Ordinary member <else/>leader</if></span> </p>
+   <p class="pe-index-t-c">My ID number <span>{$minfo.id}</span> </p>
+   <p class="pe-index-t-c">Bind mobile phone <span>{$minfo.mobile}</span> </p>
+   </div>
+
+   <a class="xgwdxx" href="{:U('Index/Index/card')}">Binding bank card</a>
+
+
+
+
+<script type="text/javascript">
+     $(".r_but").click(function(){
+         var idtype=$(this).attr("idtype");
+         $.ajax({
+             url:'{:U("Index/index/editname")}',
+             type:'POST',
+             data:$("#"+idtype).serialize(),
+             dataType:'json',
+             success:function(json){
+                 layer.msg(json.info);
+                 if(json.result ==1){
+                     window.location.href=json.url;
+                 }
+
+
+             },
+             error:function(){
+
+                 layer.msg("Network failure");
+            }
+
+
+
+        })
+
+    })
+
+
+</script>
+
+<footer>
+  	
+  		<div class="foot_bo">
+  			<a href="{:U('Index/New/index')}">
+  				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAKTWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVN3WJP3Fj7f92UPVkLY8LGXbIEAIiOsCMgQWaIQkgBhhBASQMWFiApWFBURnEhVxILVCkidiOKgKLhnQYqIWotVXDjuH9yntX167+3t+9f7vOec5/zOec8PgBESJpHmomoAOVKFPDrYH49PSMTJvYACFUjgBCAQ5svCZwXFAADwA3l4fnSwP/wBr28AAgBw1S4kEsfh/4O6UCZXACCRAOAiEucLAZBSAMguVMgUAMgYALBTs2QKAJQAAGx5fEIiAKoNAOz0ST4FANipk9wXANiiHKkIAI0BAJkoRyQCQLsAYFWBUiwCwMIAoKxAIi4EwK4BgFm2MkcCgL0FAHaOWJAPQGAAgJlCLMwAIDgCAEMeE80DIEwDoDDSv+CpX3CFuEgBAMDLlc2XS9IzFLiV0Bp38vDg4iHiwmyxQmEXKRBmCeQinJebIxNI5wNMzgwAABr50cH+OD+Q5+bk4eZm52zv9MWi/mvwbyI+IfHf/ryMAgQAEE7P79pf5eXWA3DHAbB1v2upWwDaVgBo3/ldM9sJoFoK0Hr5i3k4/EAenqFQyDwdHAoLC+0lYqG9MOOLPv8z4W/gi372/EAe/tt68ABxmkCZrcCjg/1xYW52rlKO58sEQjFu9+cj/seFf/2OKdHiNLFcLBWK8ViJuFAiTcd5uVKRRCHJleIS6X8y8R+W/QmTdw0ArIZPwE62B7XLbMB+7gECiw5Y0nYAQH7zLYwaC5EAEGc0Mnn3AACTv/mPQCsBAM2XpOMAALzoGFyolBdMxggAAESggSqwQQcMwRSswA6cwR28wBcCYQZEQAwkwDwQQgbkgBwKoRiWQRlUwDrYBLWwAxqgEZrhELTBMTgN5+ASXIHrcBcGYBiewhi8hgkEQcgIE2EhOogRYo7YIs4IF5mOBCJhSDSSgKQg6YgUUSLFyHKkAqlCapFdSCPyLXIUOY1cQPqQ28ggMor8irxHMZSBslED1AJ1QLmoHxqKxqBz0XQ0D12AlqJr0Rq0Hj2AtqKn0UvodXQAfYqOY4DRMQ5mjNlhXIyHRWCJWBomxxZj5Vg1Vo81Yx1YN3YVG8CeYe8IJAKLgBPsCF6EEMJsgpCQR1hMWEOoJewjtBK6CFcJg4Qxwicik6hPtCV6EvnEeGI6sZBYRqwm7iEeIZ4lXicOE1+TSCQOyZLkTgohJZAySQtJa0jbSC2kU6Q+0hBpnEwm65Btyd7kCLKArCCXkbeQD5BPkvvJw+S3FDrFiOJMCaIkUqSUEko1ZT/lBKWfMkKZoKpRzame1AiqiDqfWkltoHZQL1OHqRM0dZolzZsWQ8ukLaPV0JppZ2n3aC/pdLoJ3YMeRZfQl9Jr6Afp5+mD9HcMDY
