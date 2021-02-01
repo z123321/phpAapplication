@@ -17,7 +17,7 @@
 					$shouyi = M('jinbidetail')->where(array('member'=>$username))->sum('adds');
 					$liuliang = M('jinbidetail')->where(array('member'=>$username,'type'=>1))->sum('adds');
 					$tuiguang = M('jinbidetail')->where(array('member'=>$username,'type'=>2))->sum('adds');
-					 $shouyi = sprintf('%.2f',$shouyi);
+                    $shouyi = sprintf('%.2f',$shouyi);
 					$liuliang = sprintf('%.2f',$liuliang);
 					$tuiguang = sprintf('%.2f',$tuiguang);
 					$this->assign('shouyi',$shouyi);

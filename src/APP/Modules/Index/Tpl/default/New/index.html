@@ -116,9 +116,10 @@
 
 				<p class="index-nc" style="color: white">{$v.title}</p>
 				<p class="index-fd" style="font-size: small">Period：{$v.yxzq} <span style="color: white" >hr.</span></p>
-				<p class="index-cd" style="font-size: small">Hourly income：<span style="color: white">{$v.shouyi}<span style="color: white">Rs.</span></p>
+				<p class="index-cd" style="font-size: small">Hourly income：{$v.shouyi}<span style="color: white">Rs.</p>
 				<p class="index-bq" style="color: white">price:₹{$v.price}Rs.</p>
-				<p class="index-fd" style="margin-top:0px;color: yellow;font-size: xx-small ">Maximum buy number {$v["xiangou"]}group.</p>
+<!--				Maximum buy number {$v["xiangou"]}group.-->
+				<p class="index-fd" style="margin-top:0px;color: yellow;font-size: xx-small "><span style="color: yellow;font-size: xx-small" >{$v.shouyi}*24*30</span> Rs/mo (Max buy {$v["xiangou"]} group)</p>
 
 				<p class="index-bq" style="font-size: small" >  <span >New model</span> <span>high-performance</span> </p>
 <!--				index-ljgm-->
@@ -193,6 +194,7 @@
         interTime:3000
 
       });
+
 
 
     </script>
